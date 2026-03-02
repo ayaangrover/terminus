@@ -26,8 +26,8 @@ module Terminus
         required(:last_day_of_month).filled :bool
         required(:start_at).filled :date_time
 
-        after(:value_coercer, &Coercers::CommasToArray.curry[:tags])
-        after(:value_coercer, &Coercers::CommasToArray.curry[:uris])
+        after(:value_coercer, &Coercers::LinesToArray.curry[:tags])
+        after(:value_coercer, &Coercers::LinesToArray.curry[:uris])
         after(:value_coercer, &Coercers::DefaultToFalse.curry[:last_day_of_month])
         after(:value_coercer, &Coercers::DefaultToArray.curry[:days])
         after(:value_coercer, &Coercers::JSONToHash.curry[:headers])

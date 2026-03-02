@@ -21,7 +21,7 @@ module Terminus
         required(:palette_ids).maybe :array
         required(:css).maybe :hash
 
-        after(:value_coercer, &Coercers::CommasToArray.curry[:palette_ids])
+        after(:value_coercer, &Coercers::LinesToArray.curry[:palette_ids])
         after(:value_coercer, &Coercers::JSONToHash.curry[:css])
       end
     end
