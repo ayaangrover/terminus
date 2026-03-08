@@ -28,21 +28,17 @@ module Terminus
 
       def find_by(**) = with_current_item.where(**).one
 
-      def auto_update_current_item record, item_id
-        return record unless record.automatic?
-
-        update record.id, current_item_id: item_id
-      end
-
       def search key, value
         playlist.where(Sequel.ilike(key, "%#{value}%"))
                 .order { created_at.asc }
                 .to_a
       end
 
-      def update_current_item id, item
-        record = find id
-        record && item ? update(id, current_item_id: item.id) : record
+      def update_current_item record, item
+        record_id = record.id
+
+        update record_id, current_item_id: item.id if item
+        find record_id
       end
 
       def update_with_items id, attributes, collection

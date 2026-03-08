@@ -29,10 +29,10 @@ module Terminus
           private
 
           def create playlist, parameters
-            playlist_id = playlist.id
-            item = repository.create_with_position playlist_id:, **parameters[:playlist_item]
+            item = repository.create_with_position playlist_id: playlist.id,
+                                                   **parameters[:playlist_item]
 
-            playlist_repository.update_current_item playlist_id, item
+            playlist_repository.update_current_item playlist, item
             item
           end
         end
