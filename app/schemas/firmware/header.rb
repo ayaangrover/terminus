@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Terminus
-  module Contracts
+  module Schemas
     module Firmware
       # Validates request headers.
       Header = Dry::Schema.Params do

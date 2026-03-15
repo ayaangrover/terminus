@@ -65,7 +65,7 @@ RSpec.describe Terminus::Aspects::Firmware::Headers::Parser do
       firmware_headers.delete "HTTP_ID"
 
       expect(parser.call(firmware_headers)).to be_failure(
-        Terminus::Contracts::Firmware::Header.call(firmware_headers)
+        Terminus::Schemas::Firmware::Header.call(firmware_headers)
       )
     end
   end

@@ -19,11 +19,11 @@ module Terminus
           using Refinements::Hash
 
           def initialize(
-            contract: Terminus::Contracts::Firmware::Header,
+            schema: Terminus::Schemas::Firmware::Header,
             model: Terminus::Models::Firmware::Header,
             **
           )
-            @contract = contract
+            @schema = schema
             @model = model
             super(**)
           end
@@ -32,7 +32,7 @@ module Terminus
             logger.debug(tags: tags(headers)) { "Processing device request headers." }
 
             pipe headers,
-                 validate(contract, as: :to_h),
+                 validate(schema, as: :to_h),
                  use(model_name_transformer),
                  use(sensors_transformer),
                  to(model, :for)
@@ -40,9 +40,9 @@ module Terminus
 
           private
 
-          attr_reader :contract, :model
+          attr_reader :schema, :model
 
-          def tags(headers) = [headers.slice(*contract.key_map.map(&:name)).symbolize_keys]
+          def tags(headers) = [headers.slice(*schema.key_map.map(&:name)).symbolize_keys]
         end
       end
     end
