@@ -9,7 +9,11 @@ module Terminus
       module Headers
         # Parses firmware HTTP headers into records.
         class Parser
-          include Deps[:logger]
+          include Deps[
+            :logger,
+            model_name_transformer: "aspects.firmware.headers.transformers.model_name",
+            sensors_transformer: "aspects.firmware.headers.transformers.sensors"
+          ]
           include Pipeable
 
           using Refinements::Hash
@@ -26,7 +30,12 @@ module Terminus
 
           def call headers
             logger.debug(tags: tags(headers)) { "Processing device request headers." }
-            pipe headers, validate(contract, as: :to_h), to(model, :for)
+
+            pipe headers,
+                 validate(contract, as: :to_h),
+                 use(model_name_transformer),
+                 use(sensors_transformer),
+                 to(model, :for)
           end
 
           private
