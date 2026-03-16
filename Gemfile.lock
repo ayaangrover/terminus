@@ -398,7 +398,7 @@ GEM
       prism (~> 1.0)
       rbs (>= 2.7.0, < 4.0.0)
     rexml (3.4.4)
-    roda (3.101.0)
+    roda (3.102.0)
       rack
     rodauth (2.42.0)
       roda (>= 2.6.0)
@@ -821,7 +821,7 @@ CHECKSUMS
   reline (0.6.3) sha256=1198b04973565b36ec0f11542ab3f5cfeeec34823f4e54cebde90968092b1835
   repl_type_completor (0.1.13) sha256=c35ef5183b96acc11767bfdf9d24820bb6d5fcc3acbf74cecd9d201ead142483
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
-  roda (3.101.0) sha256=07b13bb5fbb8f606c17f8c21ae4897f629e59cb6f398665da6666920efd39843
+  roda (3.102.0) sha256=b2156fff6d2b1b52bfac39e4ccde0d820a26594f069c3d9e99cc0853f7ee7dcc
   rodauth (2.42.0) sha256=71ecd43af09499567d3022a2070e5aa0c5de49f7db99fb04bc7abd2602acdb20
   rom (5.4.3) sha256=dc8925ba216e9635651edbbb1b4ddc0f145782a100e78458434e5f0aacfec2c8
   rom-changeset (5.4.0) sha256=503b9d2ad082743a28c06da70d431c7f12c18c4c0bca7f90c66d5aa2e13db898
