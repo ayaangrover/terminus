@@ -14,6 +14,9 @@ module Terminus
     setting :color_maps_root,
             constructor: Terminus::Types::Pathname,
             default: Hanami.app.root.join("public/assets/color_maps")
+    setting :fonts_root,
+            constructor: Terminus::Types::Pathname,
+            default: Hanami.app.root.join("public/fonts")
     setting :git_latest_sha,
             constructor: Types::Params::String,
             default: `git rev-parse --short HEAD`.strip

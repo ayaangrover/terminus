@@ -9,6 +9,7 @@
 :docker_link: link:https://www.docker.com[Docker]
 :dragonfly_link: link:https://www.dragonflydb.io[Dragonfly]
 :esbuild_link: link:https://esbuild.github.io[esbuild]
+:extensions_link: link:doc/extensions.adoc[Extensions]
 :firmware_link: link:https://github.com/usetrmnl/trmnl-firmware[Firmware]
 :git_link: link:https://git-scm.com[Git]
 :hadolint_link: link:https://github.com/hadolint/hadolint[Haskell Dockerfile Linter]
@@ -28,6 +29,7 @@
 :rodauth_link: link:https://rodauth.jeremyevans.net[Rodauth]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :sidekiq_link: link:https://github.com/sidekiq/sidekiq[Sidekiq]
+:trmnl_framework_link: link:https://trmnl.com/framework[Framework]
 :trmnl_link: link:https://trmnl.com[TRMNL]
 :unbrickable_pledge_link: link:https://trmnl.com/blog/the-unbrickable-pledge[Unbrickable Pledge]
 :valkey_link: link:https://valkey.io[Valkey]
@@ -187,6 +189,7 @@ There are several environment variables you can use to customize behavior by upd
 * `DATABASE_URL`: Necessary to connect to your {postgres_link} database. Can be customized by changing the value in the `.env.development` or `.env.test` file created when you ran `bin/setup`.
 * `DATABASE_USER`: Defines your database user. Used by {docker_doc_link} only. Default: `terminus`.
 * `FIRMWARE_POLLER`: Enables/disables firmware polling. See {jobs_link} for details. Defaults to enabled.
+* `FONTS_PATH`: The path to where {trmnl_framework_link} fonts are stored since the Framework stylesheets require a relative path to all fonts to load properly. This is necessary when rendering screens for {extensions_link}. Default: `public/fonts`.
 * `HANAMI_PORT`: The default port when running the app locally or via {docker_doc_link}. When using Docker, this is used for the internal and external port mapping.
 * `KEYVALUE_DATABASE`: Defines your database ID. Used by {docker_doc_link} only. Default: `0`.
 * `KEYVALUE_PASSWORD`: Defines your password. Used by {docker_doc_link} only. Default: (auto-generated for you during setup).
@@ -220,7 +223,7 @@ In accordance with the {unbrickable_pledge_link}, the latest version of Terminus
 
 === Extensions
 
-See link:doc/extensions.adoc[Extensions] documentation for details.
+See {extensions_link} documentation for details.
 
 === Jobs
 
