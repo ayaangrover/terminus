@@ -522,7 +522,7 @@ CREATE TABLE public.model (
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     kind text DEFAULT 'terminus'::text NOT NULL,
     scale_factor double precision DEFAULT 1 NOT NULL,
-    palette_ids text[] DEFAULT '{}'::text[] NOT NULL,
+    palette_names text[] DEFAULT '{}'::text[] CONSTRAINT model_palette_ids_not_null NOT NULL,
     css jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 
@@ -1470,4 +1470,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20260126141642_alter_device_table_model_id_as_non_null.rb'),
 ('20260209163817_add_model_palette_ids_and_css_columns.rb'),
 ('20260217081447_create_device_sensor.rb'),
-('20260219103153_create_extension_device.rb');
+('20260219103153_create_extension_device.rb'),
+('20260318132059_rename_model_palette_ids_column.rb');
