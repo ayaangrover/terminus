@@ -11,9 +11,6 @@ module Terminus
             constructor: Types::Params::String.constrained(filled: true, min_size: 64),
             default: SecureRandom.hex(40)
     setting :browser, constructor: Terminus::Types::Browser, default: "{}"
-    setting :color_maps_root,
-            constructor: Terminus::Types::Pathname,
-            default: Hanami.app.root.join("public/assets/color_maps")
     setting :fonts_root,
             constructor: Terminus::Types::Pathname,
             default: Hanami.app.root.join("public/fonts")
