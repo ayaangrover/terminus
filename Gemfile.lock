@@ -402,7 +402,7 @@ GEM
     rexml (3.4.4)
     roda (3.102.0)
       rack
-    rodauth (2.42.0)
+    rodauth (2.43.0)
       roda (>= 2.6.0)
       sequel (>= 4)
     rom (5.4.3)
@@ -824,7 +824,7 @@ CHECKSUMS
   repl_type_completor (0.1.14) sha256=a2fe3a98ac055f497e9598a51655a30ae014659b90c3bdc324ab27e3ed5afd53
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
   roda (3.102.0) sha256=b2156fff6d2b1b52bfac39e4ccde0d820a26594f069c3d9e99cc0853f7ee7dcc
-  rodauth (2.42.0) sha256=71ecd43af09499567d3022a2070e5aa0c5de49f7db99fb04bc7abd2602acdb20
+  rodauth (2.43.0) sha256=4dc5f5c6b8013502352beb342f72b64515680af2f95603f7248031fd9203984a
   rom (5.4.3) sha256=dc8925ba216e9635651edbbb1b4ddc0f145782a100e78458434e5f0aacfec2c8
   rom-changeset (5.4.0) sha256=503b9d2ad082743a28c06da70d431c7f12c18c4c0bca7f90c66d5aa2e13db898
   rom-core (5.4.0) sha256=a08264e40892cf86a57e32f6c09803b30e4fb3b1da86a64d41e71d92575df08f
