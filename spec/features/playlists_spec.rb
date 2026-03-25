@@ -3,7 +3,9 @@
 require "hanami_helper"
 
 RSpec.describe "Playlists", :db do
-  it "creates, edits, saves, and clones playlist", :aggregate_failures, :js do
+  let(:playlist) { Factory[:playlist] }
+
+  it "creates, edits, saves, clones, and deletes playlist", :aggregate_failures, :js do
     visit routes.path(:playlists)
     click_link "New"
     fill_in "playlist[label]", with: "Test"
@@ -44,11 +46,17 @@ RSpec.describe "Playlists", :db do
     click_button "Save"
 
     expect(page).to have_content("Test II Clone")
+
+    visit routes.path(:playlists)
+
+    within ".bit-card", text: "Test II Clone" do
+      accept_prompt { click_button "Delete" }
+    end
+
+    expect(page).to have_no_content("Test II Clone")
   end
 
   it "plays screens", :aggregate_failures, :js do
-    playlist = Factory[:playlist]
-
     visit routes.path(:playlist_screens, playlist_id: playlist.id)
 
     expect(page).to have_content("No screens found.")
@@ -90,27 +98,18 @@ RSpec.describe "Playlists", :db do
 
   it "mirrors playlist to device", :aggregate_failures, :js do
     device = Factory[:device]
-    Factory[:playlist, label: "Test"]
+    playlist
 
     visit routes.path(:playlists)
     click_link "Mirror"
     check device.label
     click_button "Save"
 
-    expect(page).to have_content("Test")
+    expect(page).to have_content(playlist.label)
 
     click_link "Mirror"
     click_link "Cancel"
 
-    expect(page).to have_content("Test")
-  end
-
-  it "deletes playlist", :js do
-    playlist = Factory[:playlist]
-
-    visit routes.path(:playlists)
-    accept_prompt { click_button "Delete" }
-
-    expect(page).to have_no_content(playlist.label)
+    expect(page).to have_content(playlist.label)
   end
 end

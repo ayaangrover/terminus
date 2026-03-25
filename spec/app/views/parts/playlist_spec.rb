@@ -8,7 +8,7 @@ RSpec.describe Terminus::Views::Parts::Playlist, :db do
     screen = Factory[:screen, :with_image]
     item = Factory[:playlist_item, playlist_id: playlist.id, screen_id: screen.id]
 
-    repository = Hanami.app["repositories.playlist"]
+    repository = Terminus::Repositories::Playlist.new
     repository.update playlist.id, current_item_id: item.id
 
     described_class.new value: repository.find(playlist.id), rendering: rendering

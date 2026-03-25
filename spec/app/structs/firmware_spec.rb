@@ -20,7 +20,7 @@ RSpec.describe Terminus::Structs::Firmware, :db do
     end
 
     it "answers attributes with attachment" do
-      update = Hanami.app["repositories.firmware"].create version: "0.0.0", attachment_data: {a: 1}
+      update = Terminus::Repositories::Firmware.new.create version: "0.0.0", attachment_data: {a: 1}
       expect(update.attachment_attributes).to eq(a: 1)
     end
   end

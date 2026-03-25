@@ -19,7 +19,7 @@ RSpec.describe "Users", :db do
 
     expect(page).to have_content("test@test.io")
 
-    user = Hanami.app["repositories.user"].find_by email: "test@test.io"
+    user = Terminus::Repositories::User.new.find_by email: "test@test.io"
     within("li[id='#{user.id}']") { click_link "Edit" }
     fill_in "Name", with: ""
     click_button "Save"

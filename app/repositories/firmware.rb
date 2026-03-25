@@ -4,6 +4,8 @@ module Terminus
   module Repositories
     # The firmware repository.
     class Firmware < DB::Repository[:firmware]
+      include Deps[:shrine]
+
       commands :create
 
       commands update: :by_pk,
@@ -18,11 +20,11 @@ module Terminus
         firmware.by_pk(id).delete
       end
 
-      def delete_all shrine_store: Hanami.app[:shrine].storages[:store]
+      def delete_all
         firmware.where { attachment_data.has_key "id" }
                 .select { attachment_data.get_text("id").as(:attachment_id) }
                 .map(:attachment_id)
-                .each { shrine_store.delete it }
+                .each { shrine.storages[:store].delete it }
 
         firmware.delete
       end

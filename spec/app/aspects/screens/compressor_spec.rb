@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
-require "mini_magick"
 
 RSpec.describe Terminus::Aspects::Screens::Compressor do
   using Refinements::Pathname
@@ -9,6 +8,8 @@ RSpec.describe Terminus::Aspects::Screens::Compressor do
   subject(:converter) { described_class.new }
 
   include_context "with application dependencies"
+
+  before { Hanami.app.start :mini_magick }
 
   describe "#call" do
     let(:bmp_path) { SPEC_ROOT.join "support/fixtures/test.png" }

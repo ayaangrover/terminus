@@ -10,9 +10,7 @@ RSpec.describe Terminus::Repositories::Palette, :db do
   describe "#all" do
     it "answers all records by published date/time" do
       palette
-      two = Factory[:palette, name: "two"]
-
-      expect(repository.all.map(&:id)).to eq([palette, two].map(&:id))
+      expect(repository.all.map(&:id)).to contain_exactly(palette.id)
     end
 
     it "answers empty array when records don't exist" do

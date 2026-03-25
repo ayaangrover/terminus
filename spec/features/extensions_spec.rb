@@ -7,7 +7,6 @@ RSpec.describe "Extensions", :db do
     visit routes.path(:extensions)
     click_link "New"
     fill_in "extension[label]", with: "Test"
-
     click_button "Save"
 
     expect(page).to have_content("must be filled")
@@ -19,7 +18,7 @@ RSpec.describe "Extensions", :db do
     expect(page).to have_content("poll")
   end
 
-  it "edits, saves, builds, and clones extension", :aggregate_failures, :js do
+  it "edits, saves, builds, clones, and deletes extension", :aggregate_failures, :js do
     Factory[:model, name: "og_plus"]
     extension = Factory[:extension]
 
@@ -50,15 +49,14 @@ RSpec.describe "Extensions", :db do
     click_button "Save"
 
     expect(page).to have_content("Clone Test")
-  end
-
-  it "deletes extension", :js do
-    extension = Factory[:extension]
 
     visit routes.path(:extensions)
-    accept_prompt { click_button "Delete" }
 
-    expect(page).to have_no_content(extension.label)
+    within ".bit-card", text: "Clone Test" do
+      accept_prompt { click_button "Delete" }
+    end
+
+    expect(page).to have_no_content("Clone Test")
   end
 
   it "views gallery", :aggregate_failures do

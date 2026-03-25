@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
-require "mini_magick"
 
 RSpec.describe Terminus::Aspects::Screens::Converter do
   using Refinements::Struct
@@ -10,6 +9,8 @@ RSpec.describe Terminus::Aspects::Screens::Converter do
 
   include_context "with temporary directory"
   include_context "with screen mold"
+
+  before { Hanami.app.start :mini_magick }
 
   describe "#call" do
     before do

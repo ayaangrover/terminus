@@ -4,7 +4,7 @@ require "hanami_helper"
 
 RSpec.describe "/api/log", :db do
   let(:device) { Factory[:device] }
-  let(:repository) { Hanami.app["repositories.device_log"] }
+  let(:repository) { Terminus::Repositories::DeviceLog.new }
 
   let :headers do
     {

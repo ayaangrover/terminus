@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 require "hanami_helper"
-require "mini_magick"
 
 RSpec.describe Terminus::Aspects::Screens::Shoter do
   subject(:shoter) { described_class.new }
 
   include_context "with temporary directory"
   include_context "with application dependencies"
+
+  before { Hanami.app.start :mini_magick }
 
   describe "#call" do
     let :content do
