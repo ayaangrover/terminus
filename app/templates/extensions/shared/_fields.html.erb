@@ -78,6 +78,15 @@
       </div>
     <% end %>
 
+    <%= scope(:form_field, key: :mode, errors:).render do %>
+      <label class="key" for="extension_unit">
+        Mode
+        <%= render "shared/popovers/triggers/default", name: :mode %>
+      </label>
+
+      <% options = [["Text", "text"], ["Art", "dither"]] %>
+      <%= form.select :mode, options, id: :extension_mode, class: :value %>
+    <% end %>
 
     <div class="bit-toggle-field">
       <h2 class="bit-toggle-label">Kind</h2>

@@ -11,6 +11,7 @@ module Terminus
         required(:name).filled :string
         required(:label).filled :string
         required(:description).maybe :string
+        optional(:mode).filled :string
         required(:kind).filled :string
         required(:tags).maybe :array
         required(:headers).maybe :hash
