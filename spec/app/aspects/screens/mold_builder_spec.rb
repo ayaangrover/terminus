@@ -5,6 +5,8 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Screens::MoldBuilder, :db do
   subject(:builder) { described_class.new }
 
+  include_context "with application dependencies"
+
   describe "#call" do
     it "answers mold with palette color codes" do
       Factory[
@@ -80,6 +82,13 @@ RSpec.describe Terminus::Aspects::Screens::MoldBuilder, :db do
           height: 480
         ]
       )
+    end
+
+    it "logs debug information" do
+      model = Factory[:model, bit_depth: 4]
+      builder.call model_id: model.id, name: "test", label: "Test"
+
+      expect(logger.reread).to match(/DEBUG.+Screen mold built.+bit_depth.+4/)
     end
   end
 end

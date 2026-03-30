@@ -9,7 +9,7 @@ module Terminus
     module Screens
       # Initializes and builds a screen mold.
       class MoldBuilder
-        include Deps["aspects.models.finder", palette_repository: "repositories.palette"]
+        include Deps["aspects.models.finder", :logger, palette_repository: "repositories.palette"]
         include Initable[mold: Mold, fallbacks: {grays: 0, color_codes: []}]
         include Dry::Monads[:result]
 
@@ -19,6 +19,7 @@ module Terminus
           finder.call(model_id:, device_id:)
                 .fmap { |model| palette_attributes_for model }
                 .fmap { |model, palette| build model, palette, attributes }
+                .fmap { log_debug it }
         end
 
         private
@@ -38,6 +39,11 @@ module Terminus
             **palette_attributes,
             **attributes.slice(*allowed_keys)
           )
+        end
+
+        def log_debug record
+          logger.debug(tags: record.to_h) { "Screen mold built." }
+          record
         end
       end
     end
