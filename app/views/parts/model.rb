@@ -31,8 +31,6 @@ module Terminus
         end
 
         def palettes = palette_names.to_sentence
-
-        def type = mime_type ? mime_type.delete_prefix("image/").upcase : "Unknown"
       end
     end
   end

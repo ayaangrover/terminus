@@ -102,18 +102,4 @@ RSpec.describe Terminus::Views::Parts::Model do
       expect(part.palettes).to eq("")
     end
   end
-
-  describe "#type" do
-    it "answers type when MIME Type is defined" do
-      expect(part.type).to eq("PNG")
-    end
-
-    context "with no image data" do
-      let(:model) { Factory.structs[:model, mime_type: nil] }
-
-      it "answers unknown" do
-        expect(part.type).to eq("Unknown")
-      end
-    end
-  end
 end
