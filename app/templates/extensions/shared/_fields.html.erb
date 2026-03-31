@@ -241,7 +241,7 @@
     <%= tag.fieldset class: :column, "x-data" => "{unit: '#{field_for :unit, fields, extension}'}" do %>
       <legend class="legend">Schedule</legend>
 
-      <%= scope(:form_field, key: :schedule_start, errors:).render do %>
+      <%= scope(:form_field, key: :start_at, errors:).render do %>
         <label class="key" for="extension_start_at">
           Start
           <%= render "shared/popovers/triggers/default", name: :schedule_start %>
@@ -253,7 +253,7 @@
                                       class: :value %>
       <% end %>
 
-      <%= scope(:form_field, key: :schedule_interval, errors:).render do %>
+      <%= scope(:form_field, key: :interval, errors:).render do %>
         <label class="key" for="extension_interval">
           Interval
           <%= render "shared/popovers/triggers/default", name: :schedule_interval %>
@@ -266,7 +266,7 @@
                               class: :value %>
       <% end %>
 
-      <%= scope(:form_field, key: :schedule_unit, errors:).render do %>
+      <%= scope(:form_field, key: :unit, errors:).render do %>
         <label class="key" for="extension_unit">
           Unit
           <%= render "shared/popovers/triggers/default", name: :schedule_unit %>
