@@ -5,6 +5,6 @@ Hanami.app.register_provider :htmx do
 
   start do
     register :htmx, HTMX
-    register :htmx_defaults, {"allowScriptTags" => false, "defaultSwapStyle" => "outerHTML"}
+    register :htmx_defaults, {"allowScriptTags" => false, "defaultSwapStyle" => "outerHTML"}.freeze
   end
 end
