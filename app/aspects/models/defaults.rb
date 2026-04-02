@@ -4,7 +4,6 @@ module Terminus
   module Aspects
     module Models
       DEFAULTS = {
-        description: nil,
         mime_type: "image/png",
         colors: 2,
         bit_depth: 1,
@@ -12,8 +11,8 @@ module Terminus
         offset_x: 0,
         offset_y: 0,
         scale_factor: 1,
-        width: 800,
-        height: 480,
+        width: 0,
+        height: 0,
         palette_names: nil,
         css: nil
       }.freeze
