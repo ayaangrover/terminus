@@ -13,6 +13,9 @@ Metrics/BlockLength:
     - config/db/migrate/*
     - slices/authentication/feature.rb
     - slices/authentication/middleware.rb
+Metrics/ClassLength:
+  Exclude:
+    - app/aspects/sanitizer.rb
 Metrics/CyclomaticComplexity:
   AllowedMethods:
     - battery_voltage_to_percent
@@ -23,6 +26,7 @@ Metrics/MethodLength:
     - cloneable_attributes
     - wifi_percentage
   Exclude:
+    - app/aspects/sanitizer.rb
     - app/aspects/screens/converters/color.rb
     - app/aspects/screens/converters/monochrome.rb
     - app/aspects/screens/shoter.rb
