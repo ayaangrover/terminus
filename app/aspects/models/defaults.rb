@@ -13,7 +13,6 @@ module Terminus
         scale_factor: 1,
         width: 0,
         height: 0,
-        palette_names: nil,
         css: nil
       }.freeze
     end

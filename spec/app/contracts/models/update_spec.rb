@@ -10,6 +10,7 @@ RSpec.describe Terminus::Contracts::Models::Update do
       {
         id: 1,
         model: {
+          default_palette_id: 1,
           name: "test",
           label: "Test",
           description: nil,
@@ -22,7 +23,6 @@ RSpec.describe Terminus::Contracts::Models::Update do
           scale_factor: 1,
           width: 800,
           height: 480,
-          palette_names: "bw",
           css: "{}"
         }
       }

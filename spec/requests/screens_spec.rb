@@ -8,7 +8,7 @@ RSpec.describe "/api/screens", :db do
   include_context "with JWT"
 
   let(:palette) { Factory[:palette] }
-  let(:model) { Factory[:model, palette_names: [palette.name]] }
+  let(:model) { Factory[:model] }
   let(:screen) { Factory[:screen, :with_image, model_id: model.id] }
 
   it "answers records when screens exist" do
