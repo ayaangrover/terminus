@@ -11,6 +11,7 @@ RSpec.describe Terminus::Aspects::Extensions::Contextualizer, :db do
     let :extension do
       Factory.structs[
         :extension,
+        label: "Test",
         fields: [{"keyname" => "one", "default" => 1}],
         data: {"label" => "Test"}
       ]
@@ -25,6 +26,7 @@ RSpec.describe Terminus::Aspects::Extensions::Contextualizer, :db do
 
       expect(contextualizer.call(extension, model_id: model.id, device_id: device.id)).to eq(
         "extension" => {
+          "label" => "Test",
           "data" => {"label" => "Test"},
           "fields" => [{"keyname" => "one", "default" => 1}],
           "values" => {"one" => 1},
@@ -47,10 +49,16 @@ RSpec.describe Terminus::Aspects::Extensions::Contextualizer, :db do
     end
 
     it "answers attributes without fields, values, model, and sensors" do
-      extension = Factory.structs[:extension]
+      extension = Factory.structs[:extension, label: "Test"]
 
       expect(contextualizer.call(extension)).to eq(
-        "extension" => {"css_classes" => nil, "data" => {}, "fields" => [], "values" => {}},
+        "extension" => {
+          "label" => "Test",
+          "css_classes" => nil,
+          "data" => {},
+          "fields" => [],
+          "values" => {}
+        },
         "sensors" => []
       )
     end

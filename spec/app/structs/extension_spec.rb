@@ -8,13 +8,19 @@ RSpec.describe Terminus::Structs::Extension do
   end
 
   describe "#liquid_attributes" do
-    it "answers empty data and fields when nothing exists" do
-      expect(extension.liquid_attributes).to eq({"data" => {}, "fields" => [], "values" => {}})
+    it "answers defaults when empty" do
+      expect(extension.liquid_attributes).to eq(
+        "label" => "Test",
+        "data" => {},
+        "fields" => [],
+        "values" => {}
+      )
     end
 
-    it "answers data and fields when they exist" do
+    it "answers filled attributes when filled" do
       extension = Factory.structs[
         :extension,
+        label: "Test",
         data: {"id" => 123},
         fields: [
           {"keyname" => "one", "default" => 1},
@@ -24,6 +30,7 @@ RSpec.describe Terminus::Structs::Extension do
       ]
 
       expect(extension.liquid_attributes).to eq(
+        "label" => "Test",
         "data" => {"id" => 123},
         "fields" => [
           {"keyname" => "one", "default" => 1},

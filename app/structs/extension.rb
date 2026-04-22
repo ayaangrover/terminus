@@ -14,11 +14,7 @@ module Terminus
           all[key] = value
         end
 
-        {
-          "data" => data,
-          "fields" => all_fields,
-          "values" => values
-        }
+        {"label" => label, "data" => data, "fields" => all_fields, "values" => values}
       end
 
       def screen_label = "Extension #{label}"

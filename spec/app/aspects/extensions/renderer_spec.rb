@@ -8,12 +8,13 @@ RSpec.describe Terminus::Aspects::Extensions::Renderer, :db do
   using Refinements::Hash
 
   describe "#call" do
-    let(:extension) { Factory.structs[:extension, data: {}] }
+    let(:extension) { Factory.structs[:extension, label: "Test", data: {}] }
     let(:model) { Factory[:model] }
 
     let :context do
       {
         "extension" => {
+          "label" => "Test",
           "css_classes" => "screen screen--#{model.name} screen--1bit screen--landscape screen--1x",
           "fields" => [],
           "values" => {},
