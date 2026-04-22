@@ -21,12 +21,12 @@ module Terminus
           join_repository.where(model_id: id)
                          .map(&:palette_id)
                          .then { |ids| palette_repository.where(id: ids) }
-                         .map(&:name)
+                         .map(&:label)
                          .then { it.empty? ? ["All"] : it }
                          .to_sentence
         end
 
-        def default_palette_name = default_palette_id ? default_palette.name : "None"
+        def default_palette_label = default_palette_id ? default_palette.label : "None"
 
         def dimensions = "#{width}x#{height}"
 

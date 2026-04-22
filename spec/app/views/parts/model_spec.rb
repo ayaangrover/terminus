@@ -9,12 +9,12 @@ RSpec.describe Terminus::Views::Parts::Model, :db do
 
   describe "#allowd_palettes", :db do
     let(:model) { Factory[:model] }
-    let(:palette) { Factory[:palette, name: "test"] }
+    let(:palette) { Factory[:palette, label: "Test"] }
     let(:association) { Factory[:model_palette, model_id: model.id, palette_id: palette.id] }
 
     it "answers names when associations exist" do
       association
-      expect(part.allowed_palettes).to eq("test")
+      expect(part.allowed_palettes).to eq("Test")
     end
 
     it "answers all with no associations" do
@@ -22,21 +22,21 @@ RSpec.describe Terminus::Views::Parts::Model, :db do
     end
   end
 
-  describe "#default_palette_name", :db do
+  describe "#default_palette_label", :db do
     context "when default exists" do
       let :model do
-        palette = Factory[:palette, name: "test"]
+        palette = Factory[:palette, label: "Test"]
         model = Factory[:model, default_palette_id: palette.id]
         Terminus::Repositories::Model.new.find model.id
       end
 
-      it "answers name" do
-        expect(part.default_palette_name).to eq("test")
+      it "answers label" do
+        expect(part.default_palette_label).to eq("Test")
       end
     end
 
-    it "answers none when default doesn't exist" do
-      expect(part.default_palette_name).to eq("None")
+    it "answers none when default is missing" do
+      expect(part.default_palette_label).to eq("None")
     end
   end
 
