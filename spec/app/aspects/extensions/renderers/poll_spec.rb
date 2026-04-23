@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll do
+RSpec.describe Terminus::Aspects::Extensions::Renderers::Poll, :db do
   subject(:renderer) { described_class.new refresher: }
 
   let(:refresher) { instance_spy Terminus::Aspects::Extensions::Exchanges::Refresher }

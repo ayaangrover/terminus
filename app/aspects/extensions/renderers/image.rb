@@ -11,7 +11,7 @@ module Terminus
         class Image
           include Deps[
             exchange_repository: "repositories.extension_exchange",
-            renderer: "liquid.default"
+            renderer: "liquid.sanitize"
           ]
           include Dry::Monads[:result]
 

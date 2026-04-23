@@ -10,11 +10,11 @@ Hanami.app.register_provider :liquid, namespace: true do
       Liquid::Template.parse(template, environment:).render(data)
     end
 
-    sanitized = lambda do |template, data, environment: default|
+    sanitize = lambda do |template, data, environment: default|
       slice["aspects.sanitizer"].call Liquid::Template.parse(template, environment:).render(data)
     end
 
     register :basic, basic
-    register :default, sanitized
+    register :sanitize, sanitize
   end
 end
