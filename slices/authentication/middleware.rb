@@ -26,7 +26,8 @@ module Authentication
              :login,
              :logout,
              :remember,
-             :recovery_codes
+             :recovery_codes,
+             :session_expiration
 
       db Authentication::Slice["db.gateway"].connection
 
@@ -125,9 +126,14 @@ module Authentication
 
       # Feature: recovery_codes
       recovery_codes_table :user_recovery_code
+
+      # Feature: session_expiration
+      session_inactivity_timeout Hanami.app[:settings].session_inactivity_limit
+      max_session_lifetime Hanami.app[:settings].session_lifetime_limit
     end
 
     route do |request|
+      rodauth.check_session_expiration
       env["rodauth"] = rodauth
       request.rodauth
     end

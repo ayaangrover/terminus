@@ -27,5 +27,7 @@ module Terminus
             constructor: Terminus::Types::Pathname,
             default: Hanami.app.root.join("public/sensors.json")
     setting :screen_synchronizer, constructor: Types::Params::Bool, default: true
+    setting :session_inactivity_limit, constructor: Types::Params::Integer, default: 1_800
+    setting :session_lifetime_limit, constructor: Types::Params::Integer, default: 86_400
   end
 end
