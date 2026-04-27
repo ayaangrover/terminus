@@ -353,11 +353,24 @@
     <details open x-show="input === 'data'">
       <summary>Usage</summary>
 
-      <p>Provides additional editable data for use in your <a href="https://shopify.github.io/liquid">Liquid</a> templates. All keys are wrapped within a top-level <code>extension</code> key. For example, let's assume you have the following content:</p>
+      <p>Provides editable data for use in your <a href="https://shopify.github.io/liquid">Liquid</a> templates. All keys are wrapped within a top-level <code>extension</code> key. For example, let's assume you have the following content:</p>
 
       <p><code>{"label": "This is a demo!"}</code></p>
 
       <p>This means you can leverage the above in your Liquid template as <code>{{extension.data.label}}</code>.</p>
+
+      <p>This includes field defaults when importing from the <%= link_to "Gallery", routes.path(:extensions_gallery) %> which will show up under a top-level <code>values</code> key. To override a field, use the <code>keyname</code> value as your key and any default or option as the value. Ensure you adhere to the <code>field_type</code> when adding a custom value. For example, let's say you have the following field (truncated for brevity):</p>
+
+      <pre>
+{
+  "keyname": "temperature",
+  "options": [
+    {"Celsius": "celsius"},
+    {"Fahrenheit": "fahrenheit"}
+  ]
+}</pre>
+
+      <p>This means you could set your preference as follows: <code>{"values": {"temperature": "fahrenheit"}}</code>. In the future, this'll be configurable via form fields within the UI but, for now, you have to manually edit this data.</p>
     </details>
   </div>
 
