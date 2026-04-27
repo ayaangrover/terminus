@@ -6,9 +6,10 @@
 
 .bit-popover-content {
   border-radius: 0.5rem;
-  padding: 2rem;
-  max-width: calc(100vw - 20%);
   max-height: calc(100vh - 20%);
+  max-width: calc(100vw - 20%);
+  overflow-wrap: break-word;
+  padding: 2rem;
 
   .label {
     font-size: 1.5rem;
