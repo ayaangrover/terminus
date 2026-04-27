@@ -5,11 +5,12 @@ require "hanami_helper"
 RSpec.describe Terminus::Views::Parts::Exchange do
   subject(:part) { described_class.new value: exchange, rendering: Terminus::View.new.rendering }
 
+  let(:extension) { Factory.structs[:extension] }
   let(:exchange) { Factory.structs[:extension_exchange, template: "https://test.io"] }
 
   describe "#curl" do
     it "answers curl command" do
-      expect(part.curl).to eq("curl https://test.io")
+      expect(part.curl(extension)).to eq("curl https://test.io")
     end
   end
 
@@ -80,7 +81,9 @@ RSpec.describe Terminus::Views::Parts::Exchange do
       uri = "https://test.io/a/path/to/a/test/to/a/long/test/example"
       allow(exchange).to receive(:template).and_return(uri)
 
-      expect(part.requests).to contain_exactly("https://test.io/a/path/to/a/test/to/a/long/test...")
+      expect(part.requests(extension)).to contain_exactly(
+        "https://test.io/a/path/to/a/test/to/a/long/test..."
+      )
     end
   end
 

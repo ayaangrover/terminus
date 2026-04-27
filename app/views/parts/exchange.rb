@@ -15,7 +15,7 @@ module Terminus
 
         using Refinements::String
 
-        def curl(data = Core::EMPTY_HASH) = curler.call value, data
+        def curl(extension) = curler.call extension, value
 
         def formatted_body = json_formatter.call body
 
@@ -27,8 +27,8 @@ module Terminus
 
         def formatted_verb = verb.upcase
 
-        def requests data = Core::EMPTY_HASH, length = 50
-          uri_builder.call(template, data).map { it.trim_end length }
+        def requests extension, length = 50
+          uri_builder.call(extension, template).map { it.trim_end length }
         end
 
         def status

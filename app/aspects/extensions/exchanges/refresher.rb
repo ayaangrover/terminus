@@ -31,7 +31,7 @@ module Terminus
           private
 
           def build_inputs exchange, extension
-            uri_builder.call(exchange.template, extension.data).map do |uri|
+            uri_builder.call(extension, exchange.template).map do |uri|
               input[uri:, **exchange.http_attributes]
             end
           end

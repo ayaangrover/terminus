@@ -11,8 +11,8 @@ module Terminus
         include Deps["aspects.extensions.uri_builder"]
         include Initable[json_formatter: proc { Terminus::Aspects::JSONFormatter }]
 
-        def call exchange, data = Core::EMPTY_HASH
-          uri_builder.call(exchange.template, data)
+        def call extension, exchange
+          uri_builder.call(extension, exchange.template)
                      .map { |uri| render uri, exchange }
                      .join "\n"
         end
