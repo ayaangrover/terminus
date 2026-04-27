@@ -3,6 +3,7 @@
 require "core"
 require "dry/monads"
 require "initable"
+require "refinements/hash"
 
 module Terminus
   module Aspects
@@ -15,15 +16,17 @@ module Terminus
               include Initable[target: :fields, keys: %w[keyname default]]
               include Dry::Monads[:result]
 
-              def call attributes
-                data = attributes.fetch(target, Core::EMPTY_HASH)
-                                 .each
-                                 .with_object({}) do |item, all|
-                                   key, value = item.values_at(*keys)
-                                   all[key] = value if value
-                                 end
+              using Refinements::Hash
 
-                Success attributes.merge!(data:)
+              def call attributes
+                values = attributes.fetch(target, Core::EMPTY_HASH)
+                                   .each
+                                   .with_object({}) do |item, all|
+                                     key, value = item.values_at(*keys)
+                                     all[key] = value if value
+                                   end
+
+                Success attributes.merge!(data: {"values" => values}.compress)
               end
             end
           end

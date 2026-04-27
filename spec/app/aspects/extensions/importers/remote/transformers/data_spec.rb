@@ -21,7 +21,7 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Transformers::D
           {"keyname" => "one", "default" => 1},
           {"keyname" => "two", "default" => 2}
         ],
-        data: {"one" => 1, "two" => 2}
+        data: {"values" => {"one" => 1, "two" => 2}}
       )
     end
 

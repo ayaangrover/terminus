@@ -62,9 +62,7 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Transformer do
             "default" => "example"
           }
         ],
-        data: {
-          "test" => "example"
-        },
+        data: {"values" => {"test" => "example"}},
         interval: 1,
         unit: "none",
         template: <<~CONTENT
