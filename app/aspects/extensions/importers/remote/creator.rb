@@ -11,11 +11,14 @@ module Terminus
           # Creates extension from plugin (recipe).
           class Creator
             include Deps[
+              :logger,
               "aspects.extensions.importers.remote.transformer",
+              keyer: "aspects.extensions.importers.remote.transformers.template_keys",
               repository: "repositories.extension",
               model_repository: "repositories.model",
               exchange_repository: "repositories.extension_exchange"
             ]
+
             include Dry::Monads[:result]
 
             def initialize(problem_detail: Aspects::ProblemDetail, **)
@@ -49,14 +52,27 @@ module Terminus
               end
             end
 
-            def add_exchanges id, attributes
+            def add_exchanges extension_id, attributes
               headers, verb, templates, body = attributes.values_at :poll_headers,
                                                                     :poll_verb,
                                                                     :poll_template,
                                                                     :poll_body
 
-              templates.each do |template|
-                exchange_repository.create extension_id: id, headers:, verb:, template:, body:
+              templates.each do |content|
+                template = transform_exchange_template content
+                exchange_repository.create extension_id:, headers:, verb:, template:, body:
+              end
+            end
+
+            def transform_exchange_template content
+              case keyer.call content
+                in Success(content) then content
+                in Failure(message)
+                  logger.debug { message }
+                  Core::EMPTY_STRING
+                else
+                  logger.error { "Unable to transform exchange template." }
+                  Core::EMPTY_STRING
               end
             end
           end

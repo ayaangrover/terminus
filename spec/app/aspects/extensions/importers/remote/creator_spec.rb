@@ -9,6 +9,8 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Creator, :db do
     instance_double Terminus::Aspects::Extensions::Importers::Remote::Transformer
   end
 
+  include_context "with application dependencies"
+
   describe "#call" do
     let :attributes do
       {
@@ -46,7 +48,7 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Creator, :db do
                         poll_verb: "post",
                         poll_body: {name: "test"}
       allow(transformer).to receive(:call).and_return Success(attributes)
-      creator.call(1).success
+      creator.call 1
 
       data = Terminus::Repositories::ExtensionExchange.new.all.map(&:to_h)
 
@@ -58,6 +60,38 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Creator, :db do
           body: {"name" => "test"}
         )
       )
+    end
+
+    context "when exchange template can't be transformned" do
+      subject(:creator) { described_class.new(transformer:, keyer:) }
+
+      let :keyer do
+        instance_double(
+          Terminus::Aspects::Extensions::Importers::Remote::Transformers::TemplateKeys,
+          call: Failure("Danger!")
+        )
+      end
+
+      before { allow(transformer).to receive(:call).and_return Success(attributes) }
+
+      it "uses empty string for template" do
+        creator.call 1
+        data = Terminus::Repositories::ExtensionExchange.new.all.map(&:to_h)
+
+        expect(data).to contain_exactly(hash_including(template: ""))
+      end
+
+      it "logs debug message" do
+        creator.call 1
+        expect(logger.reread).to match(/DEBUG.+Danger!/)
+      end
+
+      it "logs error with unknown result" do
+        allow(keyer).to receive(:call).and_return "Danger!"
+        creator.call 1
+
+        expect(logger.reread).to match(/ERROR.+Unable to transform/)
+      end
     end
 
     it "fails with duplicate import" do
