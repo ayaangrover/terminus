@@ -83,17 +83,20 @@ The following documents the features supported in this implementation which are 
 
 [options="header"]
 |===
-|                                   | Terminus | Hosted
-| Dashboard                         | 🟢       | 🟢
-| Auto-Provisioning                 | 🟢       | 🟢
-| Devices                           | 🟢       | 🟢
-| Sensors                           | 🟢       | 🟢
-| JSON Data API                     | 🟢       | 🟢
-| Image Previews                    | 🟢       | 🟢
-| Playlists                         | 🟢       | 🟢
-| Plugins                           | 🟡       | 🟢
-| Account Management                | 🟢       | 🟢
-| Docker                            | 🟢       | 🔴
+|             | Terminus | Hosted
+| Dashboard   | 🟢       | 🟢
+| Devices     | 🟢       | 🟢
+| Sensors     | 🟢       | 🟢
+| API         | 🟢       | 🟢
+| Screens     | 🟢       | 🟢
+| Playlists   | 🟢       | 🟢
+| Extensions  | 🟢       | 🟢
+| Models      | 🟢       | 🟢
+| Palettes    | 🟢       | 🟢
+| Firmware    | 🟢       | 🟢
+| Accounts    | 🟢       | 🔴
+| Users       | 🟢       | 🟢
+| Docker      | 🟢       | 🔴
 |===
 
 == Requirements
