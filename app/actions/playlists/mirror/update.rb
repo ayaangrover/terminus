@@ -8,6 +8,7 @@ module Terminus
         class Update < Action
           include Deps[
             :htmx,
+            :htmx_layout,
             repository: "repositories.playlist",
             device_repository: "repositories.device",
             playlist_item_repository: "repositories.playlist_item",
@@ -36,14 +37,13 @@ module Terminus
           end
 
           def render playlist, request, response
-            htmx.response! response.headers, push_url: routes.path(:playlist, id: playlist.id)
-            response.render view, **view_settings(request, playlist)
-          end
+            id = playlist.id
 
-          def view_settings request, playlist
-            settings = {playlist:, items: playlist_item_repository.where(playlist_id: playlist.id)}
-            settings[:layout] = false if htmx.request? request.env, :request, "true"
-            settings
+            htmx.response! response.headers, push_url: routes.path(:playlist, id:)
+            response.render view,
+                            playlist:,
+                            items: playlist_item_repository.where(playlist_id: id),
+                            layout: htmx_layout.call(request)
           end
         end
       end

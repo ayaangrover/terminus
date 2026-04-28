@@ -8,7 +8,7 @@ module Terminus
       # The create action.
       class Create < Action
         include Deps[
-          :htmx,
+          :htmx_layout,
           "aspects.jobs.schedule",
           repository: "repositories.extension",
           index_view: "views.extensions.index"
@@ -23,7 +23,9 @@ module Terminus
 
           if parameters.valid?
             save parameters
-            response.render index_view, **view_settings(request)
+            response.render index_view,
+                            extensions: repository.all,
+                            layout: htmx_layout.call(request)
           else
             error response, parameters
           end
@@ -38,13 +40,6 @@ module Terminus
 
           repository.update_with_devices extension.id, {}, Array(device_ids)
           schedule.upsert(*extension.to_schedule)
-        end
-
-        def view_settings request
-          settings = {extensions: repository.all}
-
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
-          settings
         end
 
         def error response, parameters

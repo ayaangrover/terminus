@@ -6,7 +6,7 @@ module Terminus
       module Sources
         # The index action.
         class Index < Action
-          include Deps[:htmx, repository: "repositories.extension_exchange"]
+          include Deps[:htmx_layout, repository: "repositories.extension_exchange"]
 
           params { required(:extension_id).filled :integer }
 
@@ -21,21 +21,15 @@ module Terminus
           end
 
           def handle request, response
-            response.render view, **view_settings(request)
+            exchanges = repository.where extension_id: request.params[:extension_id]
+            content = json_formatter.call coalescer.call(exchanges)
+
+            response.render view, content:, layout: htmx_layout.call(request)
           end
 
           private
 
           attr_reader :coalescer, :json_formatter
-
-          def view_settings request
-            exchanges = repository.where extension_id: request.params[:extension_id]
-            content = json_formatter.call coalescer.call(exchanges)
-            settings = {content:}
-
-            settings[:layout] = false if htmx.request? request.env, :request, "true"
-            settings
-          end
         end
       end
     end

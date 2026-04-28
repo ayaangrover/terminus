@@ -6,7 +6,7 @@ module Terminus
       # The create action.
       class Create < Action
         include Deps[
-          :htmx,
+          :htmx_layout,
           repository: "repositories.playlist",
           index_view: "views.playlists.index"
         ]
@@ -24,19 +24,13 @@ module Terminus
 
           if parameters.valid?
             repository.create parameters[:playlist]
-            response.render index_view, **view_settings(request)
+            response.render index_view, playlists: repository.all, layout: htmx_layout.call(request)
           else
             error response, parameters
           end
         end
 
         private
-
-        def view_settings request
-          settings = {playlists: repository.all}
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
-          settings
-        end
 
         def error response, parameters
           response.render view,

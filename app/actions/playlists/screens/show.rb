@@ -7,7 +7,7 @@ module Terminus
         # The show action.
         class Show < Action
           include Deps[
-            :htmx,
+            :htmx_layout,
             repository: "repositories.playlist",
             item_repository: "repositories.playlist_item"
           ]
@@ -42,10 +42,14 @@ module Terminus
 
           def view_settings request, playlist
             before, current, after = slide_window.new(playlist).screens request.params[:id]
-            view_settings = {playlist:, before:, current:, after:}
-            view_settings[:layout] = false if htmx.request? request.env, :request, "true"
 
-            view_settings
+            {
+              playlist:,
+              before:,
+              current:,
+              after:,
+              layout: htmx_layout.call(request)
+            }
           end
         end
       end

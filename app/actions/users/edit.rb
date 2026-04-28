@@ -6,7 +6,7 @@ module Terminus
       # The edit action.
       class Edit < Action
         include Deps[
-          :htmx,
+          :htmx_layout,
           repository: "repositories.user",
           status_repository: "repositories.user_status"
         ]
@@ -18,15 +18,10 @@ module Terminus
 
           halt :unprocessable_content unless parameters.valid?
 
-          response.render view, **view_settings(request, parameters)
-        end
-
-        private
-
-        def view_settings request, parameters
-          settings = {user: repository.find(parameters[:id]), statuses: status_repository.all}
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
-          settings
+          response.render view,
+                          user: repository.find(parameters[:id]),
+                          statuses: status_repository.all,
+                          layout: htmx_layout.call(request)
         end
       end
     end

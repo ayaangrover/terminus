@@ -7,7 +7,7 @@ module Terminus
         # The edit action.
         class Edit < Action
           include Deps[
-            :htmx,
+            :htmx_layout,
             repository: "repositories.playlist",
             device_repository: "repositories.device"
           ]
@@ -19,19 +19,10 @@ module Terminus
 
             halt :unprocessable_content unless parameters.valid?
 
-            response.render view, **view_settings(request, parameters)
-          end
-
-          private
-
-          def view_settings request, parameters
-            settings = {
-              playlist: repository.find(parameters[:playlist_id]),
-              devices: device_repository.all
-            }
-
-            settings[:layout] = false if htmx.request? request.env, :request, "true"
-            settings
+            response.render view,
+                            playlist: repository.find(parameters[:playlist_id]),
+                            devices: device_repository.all,
+                            layout: htmx_layout.call(request)
           end
         end
       end

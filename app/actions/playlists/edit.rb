@@ -6,7 +6,7 @@ module Terminus
       # The edit action.
       class Edit < Action
         include Deps[
-          :htmx,
+          :htmx_layout,
           repository: "repositories.playlist",
           item_repository: "repositories.playlist_item"
         ]
@@ -25,10 +25,12 @@ module Terminus
 
         def view_settings request, parameters
           playlist = repository.find parameters[:id]
-          settings = {playlist:, items: item_repository.where(playlist_id: playlist.id)}
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
 
-          settings
+          {
+            playlist:,
+            items: item_repository.where(playlist_id: playlist.id),
+            layout: htmx_layout.call(request)
+          }
         end
       end
     end

@@ -7,7 +7,7 @@ module Terminus
         # The edit action.
         class Edit < Action
           include Deps[
-            :htmx,
+            :htmx_layout,
             extension_repository: "repositories.extension",
             repository: "repositories.extension_exchange"
           ]
@@ -28,14 +28,11 @@ module Terminus
           private
 
           def view_settings request, parameters
-            settings = {
+            {
               extension: extension_repository.find(parameters[:extension_id]),
-              exchange: repository.find_by(**parameters)
+              exchange: repository.find_by(**parameters),
+              layout: htmx_layout.call(request)
             }
-
-            settings[:layout] = false if htmx.request? request.env, :request, "true"
-
-            settings
           end
         end
       end

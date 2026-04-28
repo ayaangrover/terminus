@@ -6,7 +6,7 @@ module Terminus
       module Exchanges
         # The new action.
         class New < Action
-          include Deps[:htmx, extension_repository: "repositories.extension"]
+          include Deps[:htmx_layout, extension_repository: "repositories.extension"]
 
           params { required(:extension_id).filled :integer }
 
@@ -21,13 +21,11 @@ module Terminus
           private
 
           def view_settings request, parameters
-            settings = {
+            {
               extension: extension_repository.find(parameters[:extension_id]),
-              fields: {verb: "get"}
+              fields: {verb: "get"},
+              layout: htmx_layout.call(request)
             }
-
-            settings[:layout] = false if htmx.request? request.env, :request, "true"
-            settings
           end
         end
       end

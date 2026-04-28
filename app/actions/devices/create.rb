@@ -6,7 +6,7 @@ module Terminus
       # The create action.
       class Create < Action
         include Deps[
-          :htmx,
+          :htmx_layout,
           "aspects.devices.provisioner",
           repository: "repositories.device",
           model_repository: "repositories.model",
@@ -20,7 +20,8 @@ module Terminus
           parameters = request.params
 
           case provision parameters
-            in Success then response.render(index_view, **view_settings(request))
+            in Success
+              response.render index_view, devices: repository.all, layout: htmx_layout.call(request)
             else error response, parameters
           end
         end
@@ -29,12 +30,6 @@ module Terminus
 
         def provision parameters
           parameters.valid? ? provisioner.call(**parameters[:device]) : Failure
-        end
-
-        def view_settings request
-          settings = {devices: repository.all}
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
-          settings
         end
 
         def error response, parameters

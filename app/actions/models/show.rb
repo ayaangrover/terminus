@@ -5,7 +5,7 @@ module Terminus
     module Models
       # The show action.
       class Show < Action
-        include Deps[:htmx, repository: "repositories.model"]
+        include Deps[:htmx_layout, repository: "repositories.model"]
 
         params { required(:id).filled :integer }
 
@@ -14,15 +14,9 @@ module Terminus
 
           halt :unprocessable_content unless parameters.valid?
 
-          response.render view, **view_settings(request, parameters)
-        end
-
-        private
-
-        def view_settings request, parameters
-          settings = {model: repository.find(parameters[:id])}
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
-          settings
+          response.render view,
+                          model: repository.find(parameters[:id]),
+                          layout: htmx_layout.call(request)
         end
       end
     end

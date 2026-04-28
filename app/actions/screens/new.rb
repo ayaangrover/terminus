@@ -5,13 +5,10 @@ module Terminus
     module Screens
       # The new action.
       class New < Action
-        include Deps[:htmx, model_repository: "repositories.model"]
+        include Deps[:htmx_layout, model_repository: "repositories.model"]
 
         def handle request, response
-          view_settings = {models: model_repository.all}
-          view_settings[:layout] = false if htmx.request? request.env, :request, "true"
-
-          response.render view, **view_settings
+          response.render view, models: model_repository.all, layout: htmx_layout.call(request)
         end
       end
     end

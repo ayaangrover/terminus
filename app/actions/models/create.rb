@@ -5,7 +5,11 @@ module Terminus
     module Models
       # The create action.
       class Create < Action
-        include Deps[:htmx, repository: "repositories.model", index_view: "views.models.index"]
+        include Deps[
+          :htmx_layout,
+          repository: "repositories.model",
+          index_view: "views.models.index"
+        ]
 
         contract Contracts::Models::Create
 
@@ -22,11 +26,7 @@ module Terminus
 
         private
 
-        def view_settings request
-          settings = {models: repository.all}
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
-          settings
-        end
+        def view_settings(request) = {models: repository.all, layout: htmx_layout.call(request)}
 
         def error response, parameters
           response.render view,

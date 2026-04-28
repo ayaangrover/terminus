@@ -5,13 +5,10 @@ module Terminus
     module Playlists
       # The new action.
       class New < Action
-        include Deps[:htmx]
+        include Deps[:htmx_layout]
 
         def handle request, response
-          view_settings = {fields: {mode: :automatic}}
-          view_settings[:layout] = false if htmx.request? request.env, :request, "true"
-
-          response.render view, **view_settings
+          response.render view, fields: {mode: :automatic}, layout: htmx_layout.call(request)
         end
       end
     end

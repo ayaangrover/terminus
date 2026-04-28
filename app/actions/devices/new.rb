@@ -6,21 +6,18 @@ module Terminus
       # The new action.
       class New < Action
         include Deps[
-          :htmx,
+          :htmx_layout,
           "aspects.devices.defaulter",
           model_repository: "repositories.model",
           playlist_repository: "repositories.playlist"
         ]
 
         def handle request, response
-          view_settings = {
-            models: model_repository.all,
-            playlists: playlist_repository.all,
-            fields: defaulter.call
-          }
-          view_settings[:layout] = false if htmx.request? request.env, :request, "true"
-
-          response.render view, **view_settings
+          response.render view,
+                          models: model_repository.all,
+                          playlists: playlist_repository.all,
+                          fields: defaulter.call,
+                          layout: htmx_layout.call(request)
         end
       end
     end

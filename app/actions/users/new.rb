@@ -5,13 +5,10 @@ module Terminus
     module Users
       # The new action.
       class New < Action
-        include Deps[:htmx, status_repository: "repositories.user_status"]
+        include Deps[:htmx_layout, status_repository: "repositories.user_status"]
 
         def handle request, response
-          view_settings = {statuses: status_repository.all}
-          view_settings[:layout] = false if htmx.request? request.env, :request, "true"
-
-          response.render view, **view_settings
+          response.render view, statuses: status_repository.all, layout: htmx_layout.call(request)
         end
       end
     end

@@ -5,7 +5,7 @@ module Terminus
     module Extensions
       # The new action.
       class New < Action
-        include Deps[:htmx]
+        include Deps[:htmx_layout]
 
         def initialize(defaults: Aspects::Extensions::DEFAULTS, **)
           @defaults = defaults
@@ -13,10 +13,7 @@ module Terminus
         end
 
         def handle request, response
-          view_settings = {fields: defaults}
-          view_settings[:layout] = false if htmx.request? request.env, :request, "true"
-
-          response.render view, **view_settings
+          response.render view, fields: defaults, layout: htmx_layout.call(request)
         end
 
         private

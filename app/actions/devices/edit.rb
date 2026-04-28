@@ -6,7 +6,7 @@ module Terminus
       # The edit action.
       class Edit < Action
         include Deps[
-          :htmx,
+          :htmx_layout,
           repository: "repositories.device",
           model_repository: "repositories.model",
           playlist_repository: "repositories.playlist"
@@ -25,13 +25,12 @@ module Terminus
         private
 
         def view_settings request, parameters
-          settings = {
+          {
             models: model_repository.all,
             playlists: playlist_repository.all,
-            device: repository.find(parameters[:id])
+            device: repository.find(parameters[:id]),
+            layout: htmx_layout.call(request)
           }
-          settings[:layout] = false if htmx.request? request.env, :request, "true"
-          settings
         end
       end
     end
