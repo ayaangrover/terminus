@@ -7,8 +7,8 @@ RSpec.describe Terminus::Aspects::Models::PaletteOptioner, :db do
 
   describe "#call" do
     let(:model) { Factory[:model] }
-    let(:palette_a) { Factory[:palette] }
-    let(:palette_b) { Factory[:palette] }
+    let(:palette_a) { Factory[:palette, label: "a"] }
+    let(:palette_b) { Factory[:palette, label: "b"] }
 
     before do
       palette_a
