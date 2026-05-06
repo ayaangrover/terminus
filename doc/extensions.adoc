@@ -44,13 +44,15 @@ The following provides a visual roadmap of current development and work that is 
 To help you get started, let's walk through a scenario building an extension:
 
 . Visit the _Extensions_ page and click the plus icon to create a new extension.
-. Fill in _Label_ and _Name_ information.
-. Select _TRMNL OG (2-bit)_ as your model (via the Build Matrix).
+. Fill in _Ghibli_ for the _Label_ and _ghibli_ for the _Name_.
 . For _Kind_, select _Poll_.
-. For _URLs_, enter: `https://ghibliapi.vercel.app/films`.
-. Scroll down to the Template editor, copy and paste the same Liquid Template (see below) but place it inside the `+<div class="layout layout--col">+` element.
-. Click _Save_ to save your changes.
-. Upon page reload, click the _Preview_ button to see how your screen will render.
+. Select _TRMNL OG (2-bit)_ as your model (via the Build Matrix).
+. Scroll down to the Template editor, copy and paste the same Liquid Template (see below) but place it inside the `+<div class="layout layout--col">+` element. You can also select the pasted block of code and use COMMAND + `]` to indent.
+. Click _Save_ to save these changes.
+. Once saved, edit the newly created extension and scroll to the exchanges section.
+. Click on _Exchanges_ and then click the plus button in the upper right hand corner of the page.
+. Fill in `https://ghibliapi.vercel.app/films` for your template then click _Save_. You might want to refresh the page a couple times to double check that the _Data_ tab is populated. If there are errors, they'll show up via the _Errors_ tab.
+. Navigate back to your extension and click the _Preview_ button to see how your screen will render.
 
 .Liquid Template
 [%collapsible]
@@ -74,7 +76,7 @@ To help you get started, let's walk through a scenario building an extension:
 ----
 ====
 
-At this point, you can set a schedule for updating your screen as fast as a minute or as slow as a month.
+At this point you can schedule when your extension will automatically rebuilt or you can click the _Build_ button to force an immediate build. All output will show up via the _Screens_ page.
 
 == Liquid Templates
 
