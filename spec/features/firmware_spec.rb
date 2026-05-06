@@ -13,16 +13,16 @@ RSpec.describe "Firmware", :db do
     click_link "New"
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "firmware[version]", with: "0.0.0"
     click_button "Save"
 
-    expect(page).to have_content("is missing")
+    expect(page).to have_text("is missing")
     attach_file "Attachment", path
     click_button "Save"
 
-    expect(page).to have_content("0.0.0")
+    expect(page).to have_text("0.0.0")
   end
 
   it "edits", :aggregate_failures, :js do
@@ -32,23 +32,23 @@ RSpec.describe "Firmware", :db do
     fill_in "firmware[version]", with: nil
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "firmware[version]", with: "0.0.1"
     click_button "Save"
 
-    expect(page).to have_content("0.0.1")
+    expect(page).to have_text("0.0.1")
 
     click_link "Edit"
     attach_file "Attachment", path
     click_button "Save"
 
-    expect(page).to have_content("0.0.1")
+    expect(page).to have_text("0.0.1")
 
     visit routes.path(:firmware)
     accept_prompt { click_button "Delete" }
 
-    expect(page).to have_no_content("0.0.1")
+    expect(page).to have_no_text("0.0.1")
   end
 
   it "deletes", :js do
@@ -56,6 +56,6 @@ RSpec.describe "Firmware", :db do
     visit routes.path(:firmware)
     accept_prompt { click_button "Delete" }
 
-    expect(page).to have_no_content(firmware.version)
+    expect(page).to have_no_text(firmware.version)
   end
 end

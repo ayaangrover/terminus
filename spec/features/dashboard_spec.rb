@@ -20,7 +20,7 @@ RSpec.describe "Dashboard", :db do
 
   it "renders dashboard when firmware is missing" do
     visit routes.path(:root)
-    expect(page).to have_content("Dashboard")
+    expect(page).to have_text("Dashboard")
   end
 
   it "shows linked resource counts", :aggregate_failures do

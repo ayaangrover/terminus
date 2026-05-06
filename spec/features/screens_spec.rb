@@ -13,7 +13,7 @@ RSpec.describe "Screens", :db do
     click_link "New"
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     select model.label, from: "screen[model_id]"
     fill_in "screen[label]", with: "Test"
@@ -21,7 +21,7 @@ RSpec.describe "Screens", :db do
     attach_file "Image", path
     click_button "Save"
 
-    expect(page).to have_content("Test")
+    expect(page).to have_text("Test")
   end
 
   it "edits", :aggregate_failures, :js do
@@ -31,19 +31,19 @@ RSpec.describe "Screens", :db do
     click_link "Edit"
     click_button "Save"
 
-    expect(page).to have_content(model.label)
+    expect(page).to have_text(model.label)
 
     click_link "Edit"
     fill_in "screen[label]", with: nil
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "screen[label]", with: "Edit Test"
     attach_file "Image", path
     click_button "Save"
 
-    expect(page).to have_content("Edit Test")
+    expect(page).to have_text("Edit Test")
   end
 
   it "deletes", :js do
@@ -54,6 +54,6 @@ RSpec.describe "Screens", :db do
       accept_prompt { click_button "Delete" }
     end
 
-    expect(page).to have_no_content(screen.label)
+    expect(page).to have_no_text(screen.label)
   end
 end

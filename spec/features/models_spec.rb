@@ -12,12 +12,12 @@ RSpec.describe "Models", :db do
 
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "model[name]", with: "test"
     click_button "Save"
 
-    expect(page).to have_content("Test")
+    expect(page).to have_text("Test")
   end
 
   it "edits", :aggregate_failures, :js do
@@ -27,12 +27,12 @@ RSpec.describe "Models", :db do
     fill_in "model[label]", with: nil
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "model[label]", with: "Edit Test"
     click_button "Save"
 
-    expect(page).to have_content("Edit Test")
+    expect(page).to have_text("Edit Test")
   end
 
   it "clones", :aggregate_failures, :js do
@@ -42,18 +42,18 @@ RSpec.describe "Models", :db do
     fill_in "model[name]", with: nil
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "model[name]", with: "test"
     click_button "Save"
 
-    expect(page).to have_content("must be unique")
+    expect(page).to have_text("must be unique")
 
     fill_in "model[label]", with: "Clone Test"
     fill_in "model[name]", with: "clone_test"
     click_button "Save"
 
-    expect(page).to have_content("Clone Test")
+    expect(page).to have_text("Clone Test")
   end
 
   it "deletes", :js do
@@ -64,6 +64,6 @@ RSpec.describe "Models", :db do
       accept_prompt { click_button "Delete" }
     end
 
-    expect(page).to have_no_content(model.label)
+    expect(page).to have_no_text(model.label)
   end
 end

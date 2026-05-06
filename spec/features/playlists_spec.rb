@@ -12,12 +12,12 @@ RSpec.describe "Playlists", :db do
 
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "playlist[name]", with: "test"
     click_button "Save"
 
-    expect(page).to have_content("Test")
+    expect(page).to have_text("Test")
   end
 
   it "edits", :aggregate_failures, :js do
@@ -27,12 +27,12 @@ RSpec.describe "Playlists", :db do
     fill_in "playlist[label]", with: nil
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "playlist[label]", with: "Edit Playlist"
     click_button "Save"
 
-    expect(page).to have_content("Edit Playlist")
+    expect(page).to have_text("Edit Playlist")
   end
 
   it "clones", :aggregate_failures, :js do
@@ -42,18 +42,18 @@ RSpec.describe "Playlists", :db do
     fill_in "playlist[name]", with: nil
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "playlist[name]", with: "test"
     click_button "Save"
 
-    expect(page).to have_content("must be unique")
+    expect(page).to have_text("must be unique")
 
     fill_in "playlist[label]", with: "Clone Test"
     fill_in "playlist[name]", with: "clone_test"
     click_button "Save"
 
-    expect(page).to have_content("Clone Test")
+    expect(page).to have_text("Clone Test")
   end
 
   it "deletes", :js do
@@ -64,13 +64,13 @@ RSpec.describe "Playlists", :db do
       accept_prompt { click_button "Delete" }
     end
 
-    expect(page).to have_no_content(playlist.label)
+    expect(page).to have_no_text(playlist.label)
   end
 
   it "plays screenshow", :aggregate_failures, :js do
     visit routes.path(:playlist_screens, playlist_id: playlist.id)
 
-    expect(page).to have_content("No screens found.")
+    expect(page).to have_text("No screens found.")
 
     items = (1..3).map do |position|
       Factory[
@@ -86,35 +86,35 @@ RSpec.describe "Playlists", :db do
     visit routes.path(:playlists)
     click_link "Play"
 
-    expect(page).to have_content(playlist.label)
+    expect(page).to have_text(playlist.label)
     expect(page).to have_css(%(#progress[value="0"]))
     expect(page).to have_css(%(#progress[max="2"]))
-    expect(page).to have_content("1 of 3")
+    expect(page).to have_text("1 of 3")
 
     click_link "Next"
 
     expect(page).to have_css(%(#progress[value="1"]))
-    expect(page).to have_content("2 of 3")
+    expect(page).to have_text("2 of 3")
 
     click_link "Next"
 
     expect(page).to have_css(%(#progress[value="2"]))
-    expect(page).to have_content("3 of 3")
+    expect(page).to have_text("3 of 3")
 
     click_link "Previous"
 
     expect(page).to have_css(%(#progress[value="1"]))
-    expect(page).to have_content("2 of 3")
+    expect(page).to have_text("2 of 3")
 
     click_link "First"
 
     expect(page).to have_css(%(#progress[value="0"]))
-    expect(page).to have_content("1 of 3")
+    expect(page).to have_text("1 of 3")
 
     click_link "Last"
 
     expect(page).to have_css(%(#progress[value="2"]))
-    expect(page).to have_content("3 of 3")
+    expect(page).to have_text("3 of 3")
   end
 
   it "mirrors to device", :aggregate_failures, :js do
@@ -126,11 +126,11 @@ RSpec.describe "Playlists", :db do
     check device.label
     click_button "Save"
 
-    expect(page).to have_content(playlist.label)
+    expect(page).to have_text(playlist.label)
 
     click_link "Mirror"
     click_link "Cancel"
 
-    expect(page).to have_content(playlist.label)
+    expect(page).to have_text(playlist.label)
   end
 end

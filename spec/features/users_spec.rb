@@ -9,7 +9,7 @@ RSpec.describe "Users", :db do
     fill_in "Name", with: "Test User"
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "Email", with: "test@test.io"
     fill_in "Password", with: "test-1234567890"
@@ -17,7 +17,7 @@ RSpec.describe "Users", :db do
 
     click_button "Save"
 
-    expect(page).to have_content("test@test.io")
+    expect(page).to have_text("test@test.io")
   end
 
   it "edits", :aggregate_failures, :js do
@@ -31,13 +31,13 @@ RSpec.describe "Users", :db do
     fill_in "Name", with: nil
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "Name", with: "Test User"
     select "Closed", from: "Status"
     click_button "Save"
 
-    expect(page).to have_content("Test User")
-    expect(page).to have_content("Closed")
+    expect(page).to have_text("Test User")
+    expect(page).to have_text("Closed")
   end
 end

@@ -10,12 +10,12 @@ RSpec.describe "Change Login", :db do
     fill_in "Password", with: "password"
     click_button "Save"
 
-    expect(page).to have_content "logins do not match"
+    expect(page).to have_text "logins do not match"
 
     fill_in "Confirm Email", with: "alternative@test.io"
     fill_in "Password", with: "password"
     click_button "Save"
 
-    expect(page).to have_content "Your login has been changed"
+    expect(page).to have_text "Your login has been changed"
   end
 end

@@ -10,13 +10,13 @@ RSpec.describe "Login", :db do
     check "Logout all Logged In Sessions?"
     click_button "Logout"
 
-    expect(page).to have_content "Please log in to continue."
+    expect(page).to have_text "Please log in to continue."
 
     fill_in "Email", with: user.email
     fill_in "Password", with: "password"
     click_button "Login"
 
-    expect(page).to have_content "You have been logged in."
+    expect(page).to have_text "You have been logged in."
   end
 
   it "logs out but can't log in when account is not verified" do
@@ -29,7 +29,7 @@ RSpec.describe "Login", :db do
     fill_in "Password", with: "password"
     click_button "Login"
 
-    expect(page).to have_content "Your account requires verification before proceeding. " \
-                                 "Please contact administration for access"
+    expect(page).to have_text "Your account requires verification before proceeding. " \
+                              "Please contact administration for access"
   end
 end

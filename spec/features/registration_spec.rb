@@ -24,13 +24,13 @@ RSpec.describe "Registration", :db do
     fill_in "Confirm Email", with: "bogus"
     click_button "Create"
 
-    expect(page).to have_content "logins do not match"
+    expect(page).to have_text "logins do not match"
 
     fill_in "Confirm Email", with: "jill@test.io"
     fill_in "Password", with: "password-123"
     click_button "Create"
 
-    expect(page).to have_content "Your account has been created"
+    expect(page).to have_text "Your account has been created"
   end
 
   it "registers multiple users for the default account", :aggregate_failures do
@@ -41,7 +41,7 @@ RSpec.describe "Registration", :db do
     fill_in "Password", with: "password-123"
     click_button "Create"
 
-    expect(page).to have_content "Your account has been created"
+    expect(page).to have_text "Your account has been created"
     expect(database[:user].where(email: "jill@test.io").first).to include(status_id: 2)
 
     visit "/logout"
@@ -55,7 +55,7 @@ RSpec.describe "Registration", :db do
     fill_in "Password", with: "password-123"
     click_button "Create"
 
-    expect(page).to have_content "Your account requires verification before proceeding. " \
-                                 "Please contact administration for access"
+    expect(page).to have_text "Your account requires verification before proceeding. " \
+                              "Please contact administration for access"
   end
 end

@@ -12,10 +12,10 @@ RSpec.describe "Device Logs", :db do
     visit routes.path(:devices)
     click_link "Logs"
 
-    expect(page).to have_content("Danger!")
+    expect(page).to have_text("Danger!")
 
     click_link device_log.id.to_s
 
-    expect(page).to have_content("connected")
+    expect(page).to have_text("connected")
   end
 end

@@ -11,12 +11,12 @@ RSpec.describe "Extension Exchanges", :db do
     click_link "New"
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "exchange[template]", with: "https://test.io"
     click_button "Save"
 
-    expect(page).to have_content("https://test.io")
+    expect(page).to have_text("https://test.io")
   end
 
   it "edits", :aggregate_failures, :js do
@@ -24,7 +24,7 @@ RSpec.describe "Extension Exchanges", :db do
     fill_in "exchange[template]", with: nil
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "exchange[template]", with: "https://test.io/1"
 
@@ -39,6 +39,6 @@ RSpec.describe "Extension Exchanges", :db do
       accept_prompt { click_button "Delete" }
     end
 
-    expect(page).to have_no_content(exchange.template)
+    expect(page).to have_no_text(exchange.template)
   end
 end

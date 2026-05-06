@@ -14,14 +14,14 @@ RSpec.describe "Devices", :db do
     click_link "New"
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     select model.label, from: "device[model_id]"
     fill_in "device[mac_address]", with: "AA:BB:CC:11:22:33"
     click_button "Save"
     click_link "View"
 
-    expect(page).to have_content("AA:BB:CC:11:22:33")
+    expect(page).to have_text("AA:BB:CC:11:22:33")
   end
 
   it "edits", :aggregate_failures, :js do
@@ -31,12 +31,12 @@ RSpec.describe "Devices", :db do
     fill_in "device[label]", with: nil
     click_button "Save"
 
-    expect(page).to have_content("must be filled")
+    expect(page).to have_text("must be filled")
 
     fill_in "device[label]", with: "Edit Test"
     click_button "Save"
 
-    expect(page).to have_content("Edit Test")
+    expect(page).to have_text("Edit Test")
   end
 
   it "deletes", :aggregate_failures, :js do
@@ -44,6 +44,6 @@ RSpec.describe "Devices", :db do
     visit routes.path(:devices)
     accept_prompt { click_button "Delete" }
 
-    expect(page).to have_no_content(device.label)
+    expect(page).to have_no_text(device.label)
   end
 end
