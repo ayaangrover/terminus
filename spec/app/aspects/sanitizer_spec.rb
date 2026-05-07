@@ -182,7 +182,7 @@ RSpec.describe Terminus::Aspects::Sanitizer do
       source = <<~HTML.squeeze(" ").delete("\n").strip
         <html><head></head>
           <body>
-            <svg height="5" version="1.0.0" width="5" x="5" y="5" shape-rendering="crispEdges"></svg>
+            <svg version="1.0.0" viewBox="0 0 10 10" width="5" height="5" x="5" y="5" shape-rendering="crispEdges"></svg>
         </body></html>
       HTML
 

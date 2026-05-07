@@ -158,6 +158,7 @@ module Terminus
                                       x
                                       y
                                       version
+                                      viewbox
                                       shape-rendering
                                     ],
                                     "text" => %w[
