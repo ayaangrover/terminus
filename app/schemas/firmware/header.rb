@@ -10,7 +10,7 @@ module Terminus
         optional(:HTTP_FW_VERSION).filled Types::Version
         optional(:HTTP_HEIGHT).filled :integer
         optional(:HTTP_HOST).filled :string
-        required(:HTTP_ID).filled :string
+        required(:HTTP_ID).filled Types::MACAddress
         optional(:HTTP_MODEL).filled :string
         optional(:HTTP_PERCENT_CHARGED).filled :float
         optional(:HTTP_REFRESH_RATE).filled :integer
