@@ -22,5 +22,17 @@ RSpec.describe Terminus::Aspects::Extensions::Importers::Remote::Transformers::D
         unit: "none"
       )
     end
+
+    it "answers name with forward slashes converted to underscores" do
+      attributes[:label] = "Test - A - B - C"
+
+      expect(transformer.call(attributes)).to be_success(
+        label: "Test - A - B - C",
+        name: "test_a_b_c",
+        description: "Imported from TRMNL.",
+        interval: 1,
+        unit: "none"
+      )
+    end
   end
 end

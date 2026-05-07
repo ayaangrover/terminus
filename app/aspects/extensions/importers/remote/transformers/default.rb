@@ -19,7 +19,7 @@ module Terminus
 
               def call attributes
                 Success attributes.merge!(
-                  name: attributes[:label].snakecase,
+                  name: attributes[:label].snakecase.tr("/", "_"),
                   description:,
                   interval: 1,
                   unit: "none"
