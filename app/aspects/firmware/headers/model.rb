@@ -1,0 +1,54 @@
+# frozen_string_literal: true
+
+require "refinements/hash"
+
+module Terminus
+  module Aspects
+    module Firmware
+      module Headers
+        KEY_MAP = {
+          HTTP_ACCESS_TOKEN: :api_key,
+          HTTP_BATTERY_VOLTAGE: :battery_voltage,
+          HTTP_FW_VERSION: :firmware_version,
+          HTTP_HEIGHT: :height,
+          HTTP_HOST: :host,
+          HTTP_ID: :mac_address,
+          HTTP_MODEL: :model_name,
+          HTTP_PERCENT_CHARGED: :battery_charge,
+          HTTP_REFRESH_RATE: :refresh_rate,
+          HTTP_RSSI: :wifi,
+          HTTP_SENSORS: :sensors,
+          HTTP_UPDATE_SOURCE: :wake_reason,
+          HTTP_USER_AGENT: :user_agent,
+          HTTP_WIDTH: :width
+        }.freeze
+
+        # Models the HTTP headers for quick access to attributes.
+        Model = Struct.new(*KEY_MAP.values) do
+          using Refinements::Hash
+
+          def self.for headers, key_map: KEY_MAP
+            headers.transform_keys(key_map).then { new(**it) }
+          end
+
+          def initialize(**)
+            super
+            freeze
+          end
+
+          def device_attributes
+            {
+              battery_charge:,
+              battery_voltage:,
+              firmware_version: firmware_version.to_s,
+              wake_reason:,
+              wifi:,
+              width:,
+              height:
+            }.compress
+          end
+        end
+      end
+    end
+  end
+end

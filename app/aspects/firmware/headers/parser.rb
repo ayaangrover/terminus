@@ -18,11 +18,7 @@ module Terminus
 
           using Refinements::Hash
 
-          def initialize(
-            schema: Terminus::Schemas::Firmware::Header,
-            model: Terminus::Models::Firmware::Header,
-            **
-          )
+          def initialize(schema: Schemas::Firmware::Header, model: Model, **)
             @schema = schema
             @model = model
             super(**)

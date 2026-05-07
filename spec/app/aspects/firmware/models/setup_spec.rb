@@ -2,7 +2,7 @@
 
 require "hanami_helper"
 
-RSpec.describe Terminus::Models::Firmware::Setup, :db do
+RSpec.describe Terminus::Aspects::Firmware::Models::Setup, :db do
   subject(:model) { described_class.new }
 
   describe ".for" do

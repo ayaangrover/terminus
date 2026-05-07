@@ -11,7 +11,7 @@ module Terminus
             firmware_parser: "aspects.firmware.headers.parser",
             model_repository: "repositories.model"
           ]
-          include Initable[payload: Terminus::Models::Firmware::Setup]
+          include Initable[payload: Aspects::Firmware::Models::Setup]
 
           using Refines::Actions::Response
 
