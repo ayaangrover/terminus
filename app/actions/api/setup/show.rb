@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "versionaire"
-
 module Terminus
   module Actions
     module API
@@ -10,23 +8,16 @@ module Terminus
         class Show < Base
           include Deps[
             "aspects.devices.provisioner",
-            model_name_transformer: "aspects.firmware.headers.transformers.model_name",
+            firmware_parser: "aspects.firmware.headers.parser",
             model_repository: "repositories.model"
           ]
-
           include Initable[payload: Terminus::Models::Firmware::Setup]
 
           using Refines::Actions::Response
 
-          params do
-            required(:HTTP_FW_VERSION).maybe Types::String.constrained(format: Versionaire::PATTERN)
-            required(:HTTP_ID).filled Types::MACAddress
-            required(:HTTP_MODEL).maybe :string
-          end
-
           def handle request, response
-            case validate_and_transform request.env
-              in Success(headers) then create headers, response
+            case firmware_parser.call request.env
+              in Success(model) then create model, response
               in Failure(result) then unprocessable_content result.errors.to_h, response
               # :nocov:
               # :nocov:
@@ -39,14 +30,10 @@ module Terminus
 
           private
 
-          def validate_and_transform environment
-            contract.call(environment).to_monad.bind { model_name_transformer.call it.to_h }
-          end
-
-          def create headers, response
-            firmware_version, mac_address, model_name = headers.values_at :HTTP_FW_VERSION,
-                                                                          :HTTP_ID,
-                                                                          :HTTP_MODEL
+          def create model, response
+            firmware_version, mac_address, model_name = model.to_h.values_at :firmware_version,
+                                                                             :mac_address,
+                                                                             :model_name
 
             provisioner.call(model_id: find_model_id(model_name), mac_address:, firmware_version:)
                        .either -> device { render_success device, response },

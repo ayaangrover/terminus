@@ -95,9 +95,7 @@ RSpec.describe "/api/setup", :db do
       instance: "/api/setup",
       extensions: {
         errors: {
-          HTTP_FW_VERSION: ["is missing"],
-          HTTP_ID: ["is missing"],
-          HTTP_MODEL: ["is missing"]
+          HTTP_ID: ["is missing"]
         }
       }
     ]
