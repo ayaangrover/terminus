@@ -3,7 +3,7 @@
 require "hanami_helper"
 
 RSpec.describe Terminus::Aspects::Screens::Upserter, :db do
-  subject(:creator) { described_class.new }
+  subject(:upserter) { described_class.new }
 
   include_context "with temporary directory"
 
@@ -13,10 +13,10 @@ RSpec.describe Terminus::Aspects::Screens::Upserter, :db do
     let(:output_path) { temp_dir.join "test.png" }
 
     it "saves HTML as screen" do
-      result = creator.call model_id: model.id,
-                            label: "Test",
-                            name: "test",
-                            content: "<h1>Test</h1>"
+      result = upserter.call model_id: model.id,
+                             label: "Test",
+                             name: "test",
+                             content: "<h1>Test</h1>"
 
       expect(result.success).to have_attributes(
         model_id: model.id,
@@ -35,11 +35,11 @@ RSpec.describe Terminus::Aspects::Screens::Upserter, :db do
     end
 
     it "saves preprocessed URI as screen" do
-      result = creator.call model_id: model.id,
-                            label: "Test",
-                            name: "test",
-                            uri: SPEC_ROOT.join("support/fixtures/test.png"),
-                            preprocessed: true
+      result = upserter.call model_id: model.id,
+                             label: "Test",
+                             name: "test",
+                             uri: SPEC_ROOT.join("support/fixtures/test.png"),
+                             preprocessed: true
 
       expect(result.success).to have_attributes(
         model_id: model.id,
@@ -58,10 +58,10 @@ RSpec.describe Terminus::Aspects::Screens::Upserter, :db do
     end
 
     it "saves unprocessed URI as screen" do
-      result = creator.call model_id: model.id,
-                            label: "Test",
-                            name: "test",
-                            uri: SPEC_ROOT.join("support/fixtures/test.png")
+      result = upserter.call model_id: model.id,
+                             label: "Test",
+                             name: "test",
+                             uri: SPEC_ROOT.join("support/fixtures/test.png")
 
       expect(result.success).to have_attributes(
         model_id: model.id,
@@ -80,17 +80,17 @@ RSpec.describe Terminus::Aspects::Screens::Upserter, :db do
     end
 
     it "answers failure with no model ID" do
-      expect(creator.call(label: "Test", name: "test", content: "A test.")).to be_failure(
+      expect(upserter.call(label: "Test", name: "test", content: "A test.")).to be_failure(
         "Unable to find model for model ID (nil) or device ID (nil)."
       )
     end
 
     it "answers failure with no parameters" do
-      expect(creator.call).to be_failure("Invalid parameters: {}.")
+      expect(upserter.call).to be_failure("Invalid parameters: {}.")
     end
 
     it "answers failure with invalid parameters" do
-      expect(creator.call(model_id: model.id, bogus: :danger)).to be_failure(
+      expect(upserter.call(model_id: model.id, bogus: :danger)).to be_failure(
         "Invalid parameters: {model_id: #{model.id}, bogus: :danger}."
       )
     end

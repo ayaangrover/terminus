@@ -5,7 +5,7 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Screens::Upserters::Preprocessed, :db do
   using Refinements::Struct
 
-  subject(:creator) { described_class.new }
+  subject(:upserter) { described_class.new }
 
   include_context "with screen mold"
 
@@ -15,7 +15,7 @@ RSpec.describe Terminus::Aspects::Screens::Upserters::Preprocessed, :db do
     before { mold.with! model_id: model.id, content: SPEC_ROOT.join("support/fixtures/test.png") }
 
     it "answers screen" do
-      result = creator.call mold
+      result = upserter.call mold
 
       expect(result.success).to have_attributes(
         model_id: model.id,
