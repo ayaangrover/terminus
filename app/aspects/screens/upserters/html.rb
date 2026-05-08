@@ -9,12 +9,14 @@ module Terminus
       module Upserters
         # Creates screen record with image attachment from HTML content.
         class HTML
-          include Deps["aspects.screens.upserters.temp_path", repository: "repositories.screen"]
+          include Deps["aspects.screens.temp_pather", repository: "repositories.screen"]
           include Initable[struct: proc { Terminus::Structs::Screen.new }]
           include Dry::Monads[:result]
 
           def call mold
-            temp_path.call(mold) { |path| Success repository.upsert_with_image(path, mold, struct) }
+            temp_pather.call mold do |path|
+              Success repository.upsert_with_image(path, mold, struct)
+            end
           end
         end
       end

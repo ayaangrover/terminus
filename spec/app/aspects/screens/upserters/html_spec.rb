@@ -5,7 +5,7 @@ require "hanami_helper"
 RSpec.describe Terminus::Aspects::Screens::Upserters::HTML, :db do
   using Refinements::Struct
 
-  subject(:creator) { described_class.new }
+  subject(:upserter) { described_class.new }
 
   include_context "with screen mold"
 
@@ -15,7 +15,7 @@ RSpec.describe Terminus::Aspects::Screens::Upserters::HTML, :db do
     before { mold.with! model_id: model.id }
 
     it "answers screen" do
-      result = creator.call mold
+      result = upserter.call mold
 
       expect(result.success).to have_attributes(
         model_id: model.id,
@@ -36,7 +36,7 @@ RSpec.describe Terminus::Aspects::Screens::Upserters::HTML, :db do
 
   describe "#inspect" do
     it "has inspected attributes" do
-      expect(creator.inspect).to match_inspection(sanitizer: "Terminus::Aspects::Sanitizer")
+      expect(upserter.inspect).to match_inspection(sanitizer: "Terminus::Aspects::Sanitizer")
     end
   end
 end
