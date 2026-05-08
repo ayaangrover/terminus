@@ -114,6 +114,12 @@
 
         <dt class="key">Updated</dt>
         <dd class="value"><%= human_at device.updated_at %></dd>
+
+        <dt class="key">
+          Synchronized
+          <%= render "shared/popovers/triggers/default", name: :synced_at %>
+        </dt>
+        <dd class="value"><%= human_at device.synced_at %></dd>
       </dl>
     </div>
   </div>

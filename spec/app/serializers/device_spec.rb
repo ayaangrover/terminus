@@ -34,7 +34,8 @@ RSpec.describe Terminus::Serializers::Device do
       sleep_start_at: "05:00:00",
       sleep_stop_at: "10:00:00",
       created_at: "2025-01-01T10:10:10+0000",
-      updated_at: "2025-01-01T10:10:10+0000"
+      updated_at: "2025-01-01T10:10:10+0000",
+      synced_at: "2025-01-01T10:10:10+0000"
     }
   end
 

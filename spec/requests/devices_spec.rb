@@ -65,7 +65,8 @@ RSpec.describe "/api/devices", :db do
           sleep_start_at: nil,
           sleep_stop_at: nil,
           created_at: match_rfc_3339,
-          updated_at: match_rfc_3339
+          updated_at: match_rfc_3339,
+          synced_at: nil
         )
       ]
     )
@@ -109,7 +110,8 @@ RSpec.describe "/api/devices", :db do
         sleep_start_at: nil,
         sleep_stop_at: nil,
         created_at: match_rfc_3339,
-        updated_at: match_rfc_3339
+        updated_at: match_rfc_3339,
+        synced_at: nil
       }
     )
   end
@@ -324,7 +326,8 @@ RSpec.describe "/api/devices", :db do
         sleep_start_at: nil,
         sleep_stop_at: nil,
         created_at: match_rfc_3339,
-        updated_at: match_rfc_3339
+        updated_at: match_rfc_3339,
+        synced_at: nil
       }
     )
   end

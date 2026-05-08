@@ -28,6 +28,7 @@ module Terminus
         sleep_stop_at
         created_at
         updated_at
+        synced_at
       ].freeze
 
       def initialize record, keys: KEYS, transformer: Transformers::Time
