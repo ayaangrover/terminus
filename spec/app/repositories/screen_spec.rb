@@ -6,6 +6,17 @@ RSpec.describe Terminus::Repositories::Screen, :db do
   subject(:repository) { described_class.new }
 
   let(:screen) { Factory[:screen] }
+  let(:model) { Factory[:model] }
+
+  let :mold do
+    Terminus::Aspects::Screens::Mold[
+      model_id: model.id,
+      name: "test",
+      label: "Test",
+      content: "<p>test</p>",
+      mime_type: "image/bmp"
+    ]
+  end
 
   describe "#all" do
     it "answers all records" do
@@ -15,6 +26,34 @@ RSpec.describe Terminus::Repositories::Screen, :db do
 
     it "answers empty array when records don't exist" do
       expect(repository.all).to eq([])
+    end
+  end
+
+  describe "#create_with_image" do
+    let(:struct) { Factory.structs[:screen, :with_image] }
+
+    let :proof do
+      {
+        model_id: model.id,
+        name: "test",
+        label: "Test",
+        image_attributes: hash_including(
+          metadata: hash_including(
+            size: kind_of(Integer),
+            width: 1,
+            height: 1,
+            filename: "test.bmp",
+            mime_type: "image/bmp"
+          )
+        )
+      }
+    end
+
+    it "creates record" do
+      path = SPEC_ROOT.join "support/fixtures/test.bmp"
+      record = repository.create_with_image path, mold, struct
+
+      expect(record).to have_attributes(proof)
     end
   end
 
@@ -91,18 +130,6 @@ RSpec.describe Terminus::Repositories::Screen, :db do
   end
 
   describe "#upsert_with_image" do
-    let(:model) { Factory[:model] }
-
-    let :mold do
-      Terminus::Aspects::Screens::Mold[
-        model_id: model.id,
-        name: "test",
-        label: "Test",
-        content: "<p>test</p>",
-        mime_type: "image/bmp"
-      ]
-    end
-
     let :proof do
       {
         model_id: model.id,
@@ -134,7 +161,7 @@ RSpec.describe Terminus::Repositories::Screen, :db do
     context "when not existing" do
       let(:struct) { Factory.structs[:screen, :with_image] }
 
-      it "creates when not found" do
+      it "creates record" do
         path = SPEC_ROOT.join "support/fixtures/test.bmp"
         record = repository.upsert_with_image path, mold, struct
 

@@ -20,6 +20,11 @@ module Terminus
                          .to_a
       end
 
+      def create_with_image path, mold, struct
+        path.open { |io| struct.upload io, metadata: {"filename" => mold.file_name} }
+        create image_data: struct.image_attributes, **mold.image_attributes
+      end
+
       def delete id
         find(id).then { it.image_destroy if it }
         screen.by_pk(id).delete
@@ -49,11 +54,6 @@ module Terminus
       private
 
       def with_associations = screen.combine :model
-
-      def create_with_image path, mold, struct
-        path.open { |io| struct.upload io, metadata: {"filename" => mold.file_name} }
-        create image_data: struct.image_attributes, **mold.image_attributes
-      end
 
       def update_with_image path, mold, record
         path.open { |io| record.replace io, metadata: {"filename" => mold.file_name} }
