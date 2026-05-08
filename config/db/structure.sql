@@ -281,7 +281,8 @@ CREATE TABLE public.device (
     model_id integer NOT NULL,
     playlist_id integer,
     battery_charge double precision DEFAULT 0 NOT NULL,
-    wake_reason text
+    wake_reason text,
+    synced_at timestamp without time zone
 );
 
 
@@ -1672,4 +1673,5 @@ INSERT INTO schema_migrations (filename) VALUES
 ('20260406095627_add_extension_exchange.rb'),
 ('20260420112319_add_model_palette_id.rb'),
 ('20260420112332_create_model_palette.rb'),
-('20260421140616_remove_model_palette_names_column.rb');
+('20260421140616_remove_model_palette_names_column.rb'),
+('20260508102145_add_device_synced_at_column.rb');
