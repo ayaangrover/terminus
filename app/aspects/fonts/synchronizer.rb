@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "initable"
 require "refinements/pathname"
 
 module Terminus
@@ -9,33 +8,33 @@ module Terminus
       # Synchronizes TRMNL Framework fonts for local use.
       class Synchronizer
         include Deps[:settings, "aspects.downloader"]
-        include Initable[
-          root_uri: "https://trmnl.com/fonts",
-          names: %w[
-            BlockKie.ttf
-            dogicapixel.ttf
-            dogicapixelbold.ttf
-            Inter-Italic.ttf
-            Inter.ttf
-            NicoBold-Regular.ttf
-            NicoClean-Regular.ttf
-            NicoPups-Regular.ttf
-          ]
-        ]
         include Dry::Monads[:result]
 
         using Refinements::Pathname
 
+        def initialize(
+          configuration_path: Hanami.app.root.join("config/fonts.yml"),
+          root_uri: "https://trmnl.com/fonts",
+          **
+        )
+          @configuration_path = configuration_path
+          @root_uri = root_uri
+          super(**)
+        end
+
         def call
           root = settings.fonts_root.make_dir
+          names = YAML.load_file(configuration_path).fetch "names"
 
-          delete_unknown_files_in root
+          delete_unknown_files root, names
           names.map { download_to root, it }
         end
 
         private
 
-        def delete_unknown_files_in root
+        attr_reader :configuration_path, :root_uri
+
+        def delete_unknown_files root, names
           root.files
               .map { it.basename.to_s }
               .then { |locals| locals - names }
