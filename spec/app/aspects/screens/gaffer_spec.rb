@@ -6,10 +6,11 @@ RSpec.describe Terminus::Aspects::Screens::Gaffer, :db do
   subject(:gaffer) { described_class.new }
 
   describe "#call" do
-    let(:device) { Factory[:device, friendly_id: "ABC123"] }
+    let(:device) { Factory[:device, model_id: model.id, friendly_id: "ABC123"] }
+    let(:model) { Factory[:model] }
     let(:message) { "Danger!" }
 
-    it "creates screen" do
+    it "answers new screen when not found" do
       expect(gaffer.call(device, message).success).to have_attributes(
         label: "Error ABC123",
         name: "terminus_error_abc123",
@@ -24,7 +25,7 @@ RSpec.describe Terminus::Aspects::Screens::Gaffer, :db do
       )
     end
 
-    it "updates screen" do
+    it "answers updates existing screen when found" do
       Factory[
         :screen,
         model_id: device.model_id,
