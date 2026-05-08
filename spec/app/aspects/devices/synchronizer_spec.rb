@@ -22,7 +22,8 @@ RSpec.describe Terminus::Aspects::Devices::Synchronizer, :db do
             wake_reason: "Button pressed.",
             wifi: -54,
             width: 800,
-            height: 480
+            height: 480,
+            synced_at: kind_of(Time)
           )
         )
       )
