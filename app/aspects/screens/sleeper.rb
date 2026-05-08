@@ -5,12 +5,12 @@ module Terminus
     module Screens
       # Creates sleep screen for new device.
       class Sleeper
-        include Deps["aspects.screens.upserter", view: "views.screens.sleep.new"]
+        include Deps[creator: "aspects.screens.find_or_creator", view: "views.screens.sleep.new"]
 
         def call device
-          upserter.call model_id: device.model_id,
-                        content: String.new(view.call(device:)),
-                        **device.screen_attributes("sleep")
+          creator.call model_id: device.model_id,
+                       content: String.new(view.call(device:)),
+                       **device.screen_attributes("sleep")
         end
       end
     end
