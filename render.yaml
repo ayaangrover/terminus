@@ -35,7 +35,7 @@ services:
 
   - type: worker
     name: terminus-worker
-    plan: starter
+    plan: free
     autoDeployTrigger: commit
     runtime: docker
     envVars:
